@@ -8,6 +8,7 @@
 
 """
 from .named_colors import named_colors
+from .logger import *
 
 
 class Color(object):
@@ -29,6 +30,7 @@ class Color(object):
             if len(color) == 4:
                 # 3 sign hex
                 color = "#{0[1]}{0[1]}{0[2]}{0[2]}{0[3]}{0[3]}".format(color)
+            debug("hex color: %s" % color)
             hex_color = color
 
         return hex_color
