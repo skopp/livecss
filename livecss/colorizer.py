@@ -44,7 +44,6 @@ def colorize_file(view, erase_state=False):
     if state.need_generate_theme_file:
         info('Generating new theme file')
 
-
         colorized_theme_path = generate_theme(uncolorized_path(theme.abspath), colors)
         theme.set(colorized_theme_path)
 
@@ -54,6 +53,7 @@ def colorize_file(view, erase_state=False):
         # associate theme with file
         info('associate theme file state')
         state.theme_path = theme.abspath
+    info('Colorozing finished')
 
 
 def uncolorize_file(view):
@@ -116,7 +116,7 @@ def generate_theme(theme_path, colors):
 
     new_colors = (template(color) for color in set(colors))
     generate_theme_file(theme_path, new_colors, colorized_theme_path)
-
+    debug('Theme generated %s' % colorized_theme_path)
     return colorized_theme_path
 
 

@@ -53,6 +53,7 @@ class theme(object):
         def set(cls, theme_path):
             """theme: abs or relpath to PACKAGES_PATH"""
             if exists(theme_path):
+                debug('setting new theme %s' % theme_path)
                 cls._settings.set('color_scheme', theme_path)
 
         def on_select_new_theme(cls, callback):
