@@ -15,7 +15,7 @@ from collections import defaultdict
 from livecss.colorizer import colorize_file, uncolorize_file
 from livecss.config import Config
 from livecss.file_operatios import clean_junk
-from livecss.state import State, state_for
+from livecss.state import state_for
 from livecss.theme import theme
 from livecss.utils import (need_colorization, need_uncolorization,
                            is_colorizable, generate_menu, colorize_on_select_new_theme)

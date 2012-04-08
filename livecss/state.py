@@ -53,11 +53,7 @@ class State(object):
         # save current colors
         self.saved_colors = self.colors
         return need_generate
-
-    def erase(self):
-        self.colors = []
-        self.regions = []
-
+    
 
 def get_highlighted_regions(view, last_highlighted_region):
     """Return currently highlighted regions for this file."""

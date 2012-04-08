@@ -12,20 +12,20 @@ import sublime
 # local imports
 
 from .config import Config
-from .state import State
+from .state import state_for
 from .theme import theme, uncolorized_path
 from .colorizer import colorize_file
 from .menu import create_menu
 
 
 def colorize_on_select_new_theme(view):
-    state = State(view)
+    state = state_for(view)
     if not state.theme_path:
         return
     if uncolorized_path(state.theme_path) != uncolorized_path(theme.abspath):
         # here is small hack to colorize after we change the theme
         # TODO: find out better solution
-        sublime.set_timeout(lambda: colorize_file(view, True), 200)
+        sublime.set_timeout(lambda: colorize_file(view, state, True), 200)
 
 
 def generate_menu(view):
@@ -54,7 +54,7 @@ def need_colorization(view):
     global_on = config.global_on
     local_on = config.local_on
     if not local_on:
-        return
+        return False
     if global_on:
         return True
 
