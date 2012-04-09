@@ -7,7 +7,7 @@
 
 """
 import codecs
-
+import StringIO
 
 def dict_to_plist(dictionary):
     """Converts dict object to xml plist format"""
@@ -70,6 +70,8 @@ def generate_theme_file(theme_file_path, dict_seq, new_theme_file_path):
     with codecs.open(theme_file_path, 'r', 'utf-8') as f:
         # parse dict objects to plist format
         tempate_to_write = (dict_to_plist(d) for d in dict_seq)
+        # fix codecs.StreamReaderWriter.read inaccuracy
+        f = StringIO.StringIO(f.read())
         # find end of colors difinition
         end_pos = seek_until(f, '</array>')
         # text until insertation place
