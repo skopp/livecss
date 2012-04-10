@@ -18,7 +18,7 @@ from .theme import theme, uncolorized_path, colorized_path
 
 def colorize_file(view, state, forse_redraw=False):
     """Highlights color definition regions by it's real colors.
-    forse_redraw setted to True forces recolorization
+    `forse_redraw` set to True forces re-colorization
 
     """
 
@@ -31,13 +31,11 @@ def colorize_file(view, state, forse_redraw=False):
     state.regions = colored_regions
 
     if not state.is_dirty and not forse_redraw:
-        print "State is clean"
         return
 
     highlight_regions(view, colored_regions, colors, state)
 
     if forse_redraw or state.need_generate_theme_file:
-        print "Regenerating theme"
         colorized_theme_path = generate_theme(uncolorized_path(theme.abspath), colors)
         theme.set(colorized_theme_path)
 
