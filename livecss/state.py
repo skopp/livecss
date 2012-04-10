@@ -31,7 +31,7 @@ class State(object):
             is_dirty = True
 
         # check if length of region's changed
-        if is_dirty is False:
+        if not is_dirty:
             for reg_pair in zip(self.saved_regions, self.regions):
                 if abs(reg_pair[0].a - reg_pair[0].b) != abs(reg_pair[1].a - reg_pair[1].b):
                     is_dirty = True
@@ -53,7 +53,7 @@ class State(object):
         # save current colors
         self.saved_colors = self.colors
         return need_generate
-    
+
 
 def get_highlighted_regions(view, last_highlighted_region):
     """Return currently highlighted regions for this file."""
