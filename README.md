@@ -20,10 +20,11 @@ Options available:
     - colorized_formats: list of file scopes or file extensions
     - autocolorization boolean, toggle colorize on file modification
  Example:
-`{
-    "colorized_formats": ["source.css", "source.css.less", "source.sass", "xml", "json"],
-    "autocolorization": true
-}`
+ 
+    {
+        "colorized_formats": ["source.css", "source.css.less", "source.sass", "xml", "json"],
+        "autocolorization": true
+    }
 
 
 #Plans:
