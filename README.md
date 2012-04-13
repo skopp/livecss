@@ -9,11 +9,22 @@ The foreground color is selected oppositely.
 I tried to make code as readable as I can and I will keep on improving documentation quality.
 Nice html documentation is available [here][1]
 
-#Featuers:
+#Features:
 - Live on-the-fly colorization
 - Or using ST commands
-- Less/SCSS/CSS support
+- Any file format support
 - Local/global settings
+
+#Settings:
+Options available:
+    - colorized_formats: list of file scopes or file extensions
+    - autocolorization boolean, toggle colorize on file modification
+ Example:
+`{
+    "colorized_formats": ["source.css", "source.css.less", "source.sass", "xml", "json"],
+    "autocolorization": true
+}`
+
 
 #Plans:
 - Colorizing only selected regions
@@ -22,7 +33,6 @@ Nice html documentation is available [here][1]
 - Improve code quality
 
 #Limitations:
-1. Still in beta, may contains bugs.
-2. It assumes all theme are in `Packages/Color Scheme - Default folder` folder
+Still in beta, may contains bugs.
 
 [1]:http://livecss.readthedocs.org/en/latest/index.html
