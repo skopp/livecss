@@ -9,7 +9,7 @@ The foreground color is selected oppositely.
 
 ### With Package Control ###
 
-If you have the [Package Control][package_control] package installed, you can install LiveCSS from Sublime Text command palette. Open the Command Palette and select "Package Control: Install Package", then search for Live CSS and you're done!
+If you have the [Package Control][package_control] package installed, you can install LiveCSS from Sublime Text. Open the Command Palette and select "Package Control: Install Package", then search for Live CSS and you're done!
 
 ### Without Package Control ###
 
