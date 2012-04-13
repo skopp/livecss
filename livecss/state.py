@@ -6,6 +6,7 @@
 
 """
 
+
 class State(object):
     def __init__(self, view):
         self.count = 0

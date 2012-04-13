@@ -32,6 +32,6 @@ def rm_if_exists(path):
 
 def rm_theme(path):
     """Removes given `path` and .cache file for it"""
-    if path:
+    if path.startswith('Colorized-'):
         rm_if_exists(path)
         rm_if_exists(path + '.cache')

@@ -179,6 +179,13 @@ class Colors:
         self.args = args
         self._concat_dicts()
 
+
+    def keys(self):
+        return self.dict.keys()
+
+    def values(self):
+        return self.dict.values()
+
     def _concat_dicts(self):
         for d in self.args:
             if isinstance(d, dict):

@@ -7,7 +7,6 @@
     This module implements basic wrappers around ST abstractions.
 
 """
-
 import sublime
 
 # local imports
@@ -89,7 +88,11 @@ class PerFileConfig(object):
         if attr.startswith("_"):
             return object.__getattribute__(self, attr)
         if attr not in self._ignored_attrs:
-            return self._s[self._id].get(attr)
+            # default val is undef
+            val = self._s[self._id].get(attr)
+            if not isinstance(val, bool):
+                val = 'undefined'
+            return val
         else:
             return object.__getattribute__(self, attr)
 

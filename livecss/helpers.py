@@ -63,3 +63,9 @@ class AvailabilityChecker(object):
 escape = lambda s: "\'" + s + "\'"
 
 make_eq = lambda x: lambda y: x == y
+
+
+def one_of(seq):
+    "Return regex which mathes one element of seq"
+    seq = [r'\b%s\b' % el for el in seq]
+    return reduce(lambda x, y: str(x) + '|' + str(y), seq)

@@ -11,12 +11,11 @@
 # std lib
 import os
 from os.path import join as joinpath
-from os.path import abspath
 
 import sublime
 
 # Taken from sublime-git
-PLUGIN_DIRECTORY = abspath(os.curdir.replace(os.path.normpath(
+PLUGIN_DIRECTORY = os.path.abspath(os.curdir.replace(os.path.normpath(
                    os.path.join(os.getcwd(), '..', '..')) + os.path.sep, '').\
                    replace(os.path.sep, '/'))
 MENU_FILE = joinpath(PLUGIN_DIRECTORY, "Main.sublime-menu")

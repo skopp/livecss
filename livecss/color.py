@@ -21,8 +21,8 @@ class Color(object):
         color = self.color
         if color in named_colors:
             hex_color = named_colors[color]
-        elif not color.startswith('#'):
-            # if rgb
+        elif color.startswith('rgb'):
+            color = color.strip('rgba()')
             color = color.split(',')
             hex_color = self._rgb_to_hex(tuple(color))
         else:

@@ -33,7 +33,7 @@ class theme(object):
             theme_path = cls._settings.get('color_scheme') or ""
 
             if theme_path.startswith('Packages'):
-                theme_path = os.path.join(SUBLIME_PATH, theme_path)
+                return normpath(os.path.join(SUBLIME_PATH, theme_path))
 
             return normpath(theme_path)
 

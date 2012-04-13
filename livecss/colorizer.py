@@ -12,8 +12,10 @@ from .color import Color
 from .fast_theme_generation import generate_theme_file
 from .file_operatios import rm_theme
 from .helpers import escape
-from .state import State
 from .theme import theme, uncolorized_path, colorized_path
+
+from .helpers import one_of
+from .named_colors import named_colors
 
 
 def colorize_file(view, state, forse_redraw=False):
@@ -52,8 +54,8 @@ def uncolorize_file(view, state):
 
     clear_css_regions(view)
     theme.set(uncolorized_path(theme.abspath))
-
     rm_theme(state.theme_path)
+    state.theme_path = theme.abspath
 
 
 # extract colors from file
@@ -77,12 +79,13 @@ def get_colored_regions(view):
 
     """
 
-    w3c = view.find_by_selector("support.constant.color.w3c-standard-color-name.css")
-    extra_web = view.find_by_selector("invalid.deprecated.color.w3c-non-standard-color-name.css")
-    hex_rgb = view.find_by_selector("constant.other.color.rgb-value.css")
-    rbg_percent = view.find_by_selector("constant.other.color.rgb-percentage.css")
-    less_colors = view.find_by_selector("constant.other.rgb-value.css")
-    return w3c + extra_web + hex_rgb + rbg_percent + less_colors
+    hex = view.find_all(r'#(?:[0-9a-fA-F]{3}){1,2}')
+    named = view.find_all(one_of(named_colors.keys()))
+    rgb = view.find_all(r'(rgb\(\s*\b([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\b\s*,' +
+                            r'\s*\b([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\b\s*,' +
+                            r'\s*\b([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\b\s*\))|' +
+                            r'(rgb\(\s*(\d?\d%|100%)+\s*,\s*(\d?\d%|100%)+\s*,\s*(\d?\d%|100%)+\s*\))')
+    return hex + named + rgb
 
 
 # generate new theme file
