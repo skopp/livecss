@@ -63,19 +63,21 @@ class EventManager(sublime_plugin.EventListener):
             colorize_file(view, state)
 
         if need_uncolorization(view):
-            uncolorize_file(view)
+            uncolorize_file(view, state_for(view))
 
 
 class ToggleLocalLiveCssCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        conf = Config(self.view).local_on
+        view = self.view
+        state = state_for(view)
+        conf = Config(view).local_on
         if conf:
-            uncolorize_file(self.view)
+            uncolorize_file(view, state)
         else:
-            colorize_file(self.view, True)
+            colorize_file(view, state, True)
 
-        Config(self.view).local_on = not conf
-        generate_menu(self.view)
+        Config(view).local_on = not conf
+        generate_menu(view)
 
     def is_visible(self):
         return is_colorizable(self.view)
@@ -83,17 +85,18 @@ class ToggleLocalLiveCssCommand(sublime_plugin.TextCommand):
 
 class ToggleGlobalLiveCssCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        conf = Config(self.view)
-
+        view = self.view
+        state = state_for(view)
+        conf = Config(view)
         if conf.global_on:
-            uncolorize_file(self.view)
-            Config(self.view).local_on = not conf.global_on
+            uncolorize_file(view, state)
+            Config(view).local_on = not conf.global_on
         else:
             if conf.local_on:
-                colorize_file(self.view, True)
+                colorize_file(view, state, True)
 
-        Config(self.view).global_on = not conf.global_on
-        generate_menu(self.view)
+        Config(view).global_on = not conf.global_on
+        generate_menu(view)
 
     def is_visible(self):
         return is_colorizable(self.view)
