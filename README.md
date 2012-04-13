@@ -25,7 +25,8 @@ Options available:
         "colorized_formats": ["source.css", "source.css.less", "source.sass", "xml", "json"],
         "autocolorization": true
     }
-
+    
+Path to settings file - `os.path.join(sublime.packages_path(), 'User', 'LiveCSS.sublime-settings')`
 
 #Plans:
 - Colorizing only selected regions
