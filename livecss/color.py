@@ -30,9 +30,8 @@ class Color(object):
             hex_color = self._rgb_to_hex(tuple(color))
         elif color.startswith('hsl'):
             h, s, l = color.strip('hsl()').replace('%', '').split(',')
-            rgb_color = [255 * i for i in colorsys.hls_to_rgb(float(h) / 360, float(l) / 100, float(s) / 100)]
-            print rgb_color
-            hex_color = self._rgb_to_hex(rgb_color)
+            hex_color = self._rgb_to_hex([255 * i for i in \
+                colorsys.hls_to_rgb(float(h) / 360, float(l) / 100, float(s) / 100)])
         else:
             if len(color) == 4:
                 # 3 sign hex
