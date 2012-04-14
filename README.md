@@ -29,6 +29,7 @@ Nice html documentation is available [here][1]
 - Or using ST commands
 - Any file format support
 - Local/global settings
+- rgb, hsl, hex, web colors
 
 #Settings:
 Options available:
