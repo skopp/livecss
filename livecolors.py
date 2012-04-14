@@ -12,7 +12,7 @@ import sublime_plugin
 
 # local imports
 from livecss.colorizer import colorize_file, uncolorize_file
-from livecss.file_operatios import clean_junk
+from livecss.file_operations import clean_junk
 from livecss.state import state_for
 from livecss.theme import theme
 from livecss.utils import (need_colorization, need_uncolorization, generate_default_settings,

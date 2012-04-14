@@ -10,7 +10,7 @@
 
 from .color import Color
 from .fast_theme_generation import generate_theme_file
-from .file_operatios import rm_theme
+from .file_operations import rm_theme
 from .helpers import escape
 from .theme import theme, uncolorized_path, colorized_path
 
