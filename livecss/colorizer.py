@@ -39,9 +39,8 @@ def colorize_file(view, state, forse_redraw=False):
 
     if forse_redraw or state.need_generate_theme_file:
         colorized_theme_path = generate_theme(uncolorized_path(theme.abspath), colors)
-        if state.focused:
+        if hasattr(state, 'focused') and state.focused:
             theme.set(colorized_theme_path)
-
         # remove previously used theme if any
         rm_theme(state.theme_path)
         # associate theme with file
