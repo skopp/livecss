@@ -11,7 +11,7 @@
 # std lib
 from os import listdir
 from os import remove as rm
-from os.path import exists, join
+from os.path import exists, join, basename
 
 import sublime
 
@@ -32,6 +32,6 @@ def rm_if_exists(path):
 
 def rm_theme(path):
     """Removes given `path` and .cache file for it"""
-    if path.startswith('Colorized-'):
+    if basename(path).startswith('Colorized-'):
         rm_if_exists(path)
         rm_if_exists(path + '.cache')
