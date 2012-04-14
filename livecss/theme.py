@@ -9,7 +9,7 @@
 """
 
 # std lib
-from os.path import basename, normpath, relpath, exists
+from os.path import basename, normpath, exists
 from random import randint
 import os.path
 import re

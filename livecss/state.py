@@ -70,7 +70,28 @@ def get_highlighted_regions(view, last_highlighted_region):
 
 
 states = dict()
-def state_for(view):
-    if view.buffer_id() not in states:
-        states[view.buffer_id()] = State(view)
-    return states[view.buffer_id()]
+class state_for(object):
+    """Store and retrieve state"""
+    def __init__(self, view):
+        """Create or retrieve state for given view
+        self.focused = unique attribute for all states
+        """
+        if view.buffer_id() not in states:
+            states[view.buffer_id()] = State(view)
+        self.view = view
+
+    def __getattribute__(self, attr):
+        if attr == 'focused':
+            bid, is_focused = states['focused']
+            if bid == self.view.buffer_id():
+                return True
+        elif attr == 'view' or attr.startswith('__'):
+            return object.__getattribute__(self, attr)
+        return getattr(states[self.view.buffer_id()], attr)
+
+    def __setattr__(self, attr, value):
+        object.__setattr__(self, attr, value)
+        if attr == 'focused':
+            states['focused'] = [self.view.buffer_id(), value]
+        elif attr != 'view' and not attr.startswith('__'):
+            setattr(states[self.view.buffer_id()], attr, value)

@@ -9,9 +9,6 @@
 """
 import sublime
 
-# local imports
-from .helpers import AvailabilityChecker
-
 
 class Settings(object):
 
@@ -62,18 +59,15 @@ class PerFileConfig(object):
 
     """
 
-    def __init__(self, name, settings_file, in_memory, ignored_attrs=False):
+    def __init__(self, name, settings_file, in_memory):
         """
         @param {anytype} name: identification sign
         @param {str} settings_file: settings file name
         @param {bool} in_memory: save on each attribute setting
-        @param {anytype} ignored_attrs: attribute to ignore from storing
-                                        in ST settings object
 
         """
 
         self._id = str(name)
-        self._ignored_attrs = AvailabilityChecker(ignored_attrs)
         self._s = Settings(settings_file, in_memory)
 
         if self._id not in self._s:
@@ -81,31 +75,24 @@ class PerFileConfig(object):
 
     def __getattribute__(self, attr):
         """Retrieve attribute from ST settings.
-        Ignore underscored and those in ignored_attrs.
-
         """
 
         if attr.startswith("_"):
             return object.__getattribute__(self, attr)
-        if attr not in self._ignored_attrs:
-            # default val is undef
-            val = self._s[self._id].get(attr)
-            if not isinstance(val, bool):
-                val = 'undefined'
-            return val
-        else:
-            return object.__getattribute__(self, attr)
+        # default val is undefined
+        val = self._s[self._id].get(attr)
+        if not isinstance(val, bool):
+            val = 'undefined'
+        return val
 
     def __setattr__(self, attr, value):
         """Always uses standard attribute setter
-        If it's not underscored or found in ignored,
-        it stores in ST settings
+        If it's not underscored it is stored in ST settings
 
         """
 
         object.__setattr__(self, attr, value)
         if not attr.startswith("_"):
-            if not attr in self._ignored_attrs:
-                s = self._s[self._id]
-                s[attr] = value
-                self._s[self._id] = s
+            s = self._s[self._id]
+            s[attr] = value
+            self._s[self._id] = s

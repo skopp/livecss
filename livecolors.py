@@ -17,7 +17,7 @@ from livecss.state import state_for
 from livecss.theme import theme
 from livecss.utils import (need_colorization, need_uncolorization, generate_default_settings,
                            is_colorizable, generate_menu, colorize_on_select_new_theme)
-from livecss.settings import LocalSettings, settings
+from livecss.settings import settings_for, toggle
 
 
 class CssColorizeCommand(sublime_plugin.TextCommand):
@@ -39,7 +39,6 @@ class EventManager(sublime_plugin.EventListener):
     def on_load(self, view):
         # set hook to recolorize if different theme was chosen
         theme.on_select_new_theme(lambda: colorize_on_select_new_theme(view))
-
         if need_colorization(view):
             colorize_file(view, state_for(view))
 
@@ -56,8 +55,9 @@ class EventManager(sublime_plugin.EventListener):
             generate_menu(view)
 
         state = state_for(view)
+        state.focused = True
         if state and state.theme_path:
-            # set file's own theme path, because we use one per css file
+            # set file's own theme path, because we use one per file
             theme.set(state.theme_path)
 
         if need_colorization(view):
@@ -71,12 +71,12 @@ class ToggleLocalLiveCssCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         view = self.view
         state = state_for(view)
-        autocolorize_locally = LocalSettings(view).local_on
-        if autocolorize_locally:
+        settings = settings_for(view)
+        if settings.local.autocolorize:
             uncolorize_file(view, state)
         else:
             colorize_file(view, state, True)
-        LocalSettings(view).local_on = not LocalSettings(view).local_on
+        toggle(settings.local, 'autocolorize')
         generate_menu(view)
 
     def is_visible(self):
@@ -87,14 +87,12 @@ class ToggleGlobalLiveCssCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         view = self.view
         state = state_for(view)
-        autocolorize_locally = LocalSettings(view).local_on
-        autocolorize_globally = settings['autocolorization']
-        if autocolorize_globally and autocolorize_locally:
+        settings = settings_for(view)
+        if settings.glob.autocolorize and settings.local.autocolorize:
             uncolorize_file(view, state)
-        elif not autocolorize_globally and autocolorize_locally in ['undefined', False]:
+        elif not settings.glob.autocolorize and settings.local.autocolorize in ['undefined', False]:
             colorize_file(view, state, True)
-
-        settings['autocolorization'] = not settings['autocolorization']
+        toggle(settings.glob, 'autocolorize')
         generate_menu(view)
 
     def is_visible(self):
