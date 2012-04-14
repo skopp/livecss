@@ -16,8 +16,7 @@ from glob import glob
 
 import sublime
 
-compact = lambda seq: [el for el in seq if el]
-flatten = lambda seq: [item for sublist in seq for item in sublist]
+from .helpers import compact, flatten
 
 
 def clean_junk():

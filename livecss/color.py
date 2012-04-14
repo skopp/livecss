@@ -10,7 +10,11 @@
 
 import colorsys
 
-from .named_colors import named_colors
+from .colors import named_colors
+
+
+def to_numbers(seq):
+    return [float(num) for num in seq]
 
 
 class Color(object):
@@ -25,13 +29,21 @@ class Color(object):
         if color in named_colors:
             hex_color = named_colors[color]
         elif color.startswith('rgb'):
-            color = color.strip('rgba()')
-            color = color.split(',')
-            hex_color = self._rgb_to_hex(tuple(color))
+            if color.startswith('rgba'):
+                r, g, b, a = to_numbers(color.strip('rgba()').replace('%', '').split(','))
+            else:
+                r, g, b = to_numbers(color.strip('rgb()').replace('%', '').split(','))
+            hex_color = self._rgb_to_hex((r, g, b))
+
         elif color.startswith('hsl'):
-            h, s, l = color.strip('hsl()').replace('%', '').split(',')
-            hex_color = self._rgb_to_hex([255 * i for i in \
-                colorsys.hls_to_rgb(float(h) / 360, float(l) / 100, float(s) / 100)])
+            if color.startswith('hsla'):
+                h, s, l, a = to_numbers(color.strip('hsla()').replace('%', '').split(','))
+            else:
+                h, s, l = to_numbers(color.strip('hsl()').replace('%', '').split(','))
+
+            h, s, l = (h / 360.0, s / 100.0, l / 100.0)
+            hex_color = self._rgb_to_hex([255 * i for i in colorsys.hls_to_rgb(h, l, s)])
+
         else:
             if len(color) == 4:
                 # 3 sign hex

@@ -14,8 +14,8 @@ from .file_operations import rm_theme
 from .helpers import escape
 from .theme import theme, uncolorized_path, colorized_path
 
-from .helpers import one_of
-from .named_colors import named_colors
+from .colors import color_regexps
+from .helpers import compact, flatten
 
 
 def colorize_file(view, state, forse_redraw=False):
@@ -78,18 +78,9 @@ def get_colored_regions(view):
     :return: list of ST regions
 
     """
+    return compact(flatten(view.find_all(regexp) for regexp in color_regexps))
 
-    hex = view.find_all(r'#(?:[0-9a-fA-F]{3}){1,2}')
-    named = view.find_all(one_of(named_colors.keys()))
-    rgb = view.find_all(r'(rgb\(\s*\b([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\b\s*,' +
-                            r'\s*\b([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\b\s*,' +
-                            r'\s*\b([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\b\s*\))|' +
-                            r'(rgb\(\s*(\d?\d%|100%)+\s*,\s*(\d?\d%|100%)+\s*,\s*(\d?\d%|100%)+\s*\))')
-
-    hsl = view.find_all(r'(hsl\(\s*\b([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|3[0-6]0)\b\s*,' +
-                            r'\s*\b([0-9]|[1-9][0-9]|100)\b%\s*,' +
-                            r'\s*\b([0-9]|[1-9][0-9]|100)\b%\s*\))')
-    return hex + named + rgb + hsl
+    # return hex + named + rgb + hsl + rgba + hsla + rgb_percent + rgba_percent
 
 
 # generate new theme file

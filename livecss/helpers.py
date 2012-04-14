@@ -18,3 +18,6 @@ def one_of(seq):
     return reduce(lambda x, y: str(x) + '|' + str(y), seq)
 
 escape = lambda s: "\'" + s + "\'"
+
+compact = lambda seq: [el for el in seq if el]
+flatten = lambda seq: [item for sublist in seq for item in sublist]
