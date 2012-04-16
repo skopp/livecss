@@ -48,8 +48,6 @@ def is_colorizable(view):
         file_ext = file_name.split('.')[-1]
     else:
         file_ext = ""
-    # if not file_scope is 'source.python':
-    #     return True
     if file_scope in s.glob.colorized_formats or file_ext in s.glob.colorized_formats:
         return True
 
@@ -75,7 +73,7 @@ def need_uncolorization(view):
 
 
 def generate_default_settings():
-    if not os.path.exists(os.path.join(sublime.packages_path(), 'User', 'LiveCSS.sublime-settings')):
+    if not os.path.exists(os.path.join(sublime.packages_path(), 'User', 'livecss-settings.sublime-settings')):
         s = settings_for(False)
         s.glob.colorized_formats = ["source.css", "source.css.less", "source.sass"]
         s.glob.autocolorize = True

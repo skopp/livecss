@@ -9,7 +9,7 @@ def settings_for(view):
         pass
     if view.__class__ == sublime.View:
         wrapper.local = PerFileConfig(view.buffer_id(), 'LivecssState.sublime-settings', True)
-    wrapper.glob = Settings('LiveCSS.sublime-settings', False)
+    wrapper.glob = Settings('livecss-settings.sublime-settings', False)
     return wrapper
 
 
