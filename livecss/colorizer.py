@@ -55,7 +55,7 @@ def uncolorize_file(view, state):
     clear_css_regions(view)
     theme.set(uncolorized_path(theme.abspath))
     rm_theme(state.theme_path)
-    state.theme_path = theme.abspath
+    state.theme_path = False
 
 
 # extract colors from file
@@ -79,8 +79,6 @@ def get_colored_regions(view):
 
     """
     return compact(flatten(view.find_all(regexp) for regexp in color_regexps))
-
-    # return hex + named + rgb + hsl + rgba + hsla + rgb_percent + rgba_percent
 
 
 # generate new theme file
