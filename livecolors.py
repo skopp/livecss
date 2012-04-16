@@ -74,11 +74,9 @@ class ToggleLocalLiveCssCommand(sublime_plugin.TextCommand):
         state = state_for(view)
         settings = settings_for(view)
         if settings.local.autocolorize == True:
-            print "Local is true"
             uncolorize_file(view, state)
             settings.local.autocolorize = local_checked = False
         elif settings.local.autocolorize == 'undefined':
-            print "Local is undefined"
             if settings.glob.autocolorize:
                 uncolorize_file(view, state)
                 settings.local.autocolorize = local_checked = False
@@ -86,10 +84,8 @@ class ToggleLocalLiveCssCommand(sublime_plugin.TextCommand):
                 colorize_file(view, state, True)
                 settings.local.autocolorize = local_checked = True
         else:
-            print "Local is false"
             colorize_file(view, state, True)
             settings.local.autocolorize = local_checked = True
-        print "Toggling state to ", settings.local.autocolorize
         generate_menu(view)
 
 
