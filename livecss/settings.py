@@ -11,7 +11,3 @@ def settings_for(view):
         wrapper.local = PerFileConfig(view.buffer_id(), 'LivecssState.sublime-settings', True)
     wrapper.glob = Settings('livecss-settings.sublime-settings', False)
     return wrapper
-
-
-def toggle(obj, key):
-    setattr(obj, key, not getattr(obj, key))

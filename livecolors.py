@@ -14,10 +14,10 @@ import sublime_plugin
 from livecss.colorizer import colorize_file, uncolorize_file
 from livecss.file_operations import clean_junk
 from livecss.state import state_for
-from livecss.theme import theme
+from livecss.theme import theme, is_colorized
 from livecss.utils import (need_colorization, need_uncolorization, generate_default_settings,
                            is_colorizable, generate_menu, colorize_on_select_new_theme)
-from livecss.settings import settings_for, toggle
+from livecss.settings import settings_for
 
 
 class CssColorizeCommand(sublime_plugin.TextCommand):
@@ -69,18 +69,28 @@ class EventManager(sublime_plugin.EventListener):
 
 class ToggleLocalLiveCssCommand(sublime_plugin.TextCommand):
     def run(self, edit):
+        global local_checked
         view = self.view
         state = state_for(view)
         settings = settings_for(view)
-        if settings.local.autocolorize:
+        if settings.local.autocolorize == True:
+            print "Local is true"
             uncolorize_file(view, state)
+            settings.local.autocolorize = local_checked = False
+        elif settings.local.autocolorize == 'undefined':
+            print "Local is undefined"
+            if settings.glob.autocolorize:
+                uncolorize_file(view, state)
+                settings.local.autocolorize = local_checked = False
+            else:
+                colorize_file(view, state, True)
+                settings.local.autocolorize = local_checked = True
         else:
+            print "Local is false"
             colorize_file(view, state, True)
-        toggle(settings.local, 'autocolorize')
+            settings.local.autocolorize = local_checked = True
+        print "Toggling state to ", settings.local.autocolorize
         generate_menu(view)
-
-    def is_visible(self):
-        return is_colorizable(self.view)
 
 
 class ToggleGlobalLiveCssCommand(sublime_plugin.TextCommand):
@@ -88,12 +98,13 @@ class ToggleGlobalLiveCssCommand(sublime_plugin.TextCommand):
         view = self.view
         state = state_for(view)
         settings = settings_for(view)
-        if settings.glob.autocolorize and settings.local.autocolorize:
-            uncolorize_file(view, state)
-        elif not settings.glob.autocolorize and settings.local.autocolorize in ['undefined', False]:
-            colorize_file(view, state, True)
-        toggle(settings.glob, 'autocolorize')
+        if settings.glob.autocolorize:
+            if is_colorized(theme.name):
+                uncolorize_file(view, state)
+            settings.glob.autocolorize = self.checked = False
+        else:
+            if not is_colorized(theme.name):
+                colorize_file(view, state, True)
+            settings.glob.autocolorize = self.checked = True
         generate_menu(view)
 
-    def is_visible(self):
-        return is_colorizable(self.view)

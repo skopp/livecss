@@ -32,7 +32,13 @@ def colorize_on_select_new_theme(view):
 
 def generate_menu(view):
     s = settings_for(view)
-    create_menu(s.local.autocolorize, s.glob.autocolorize)
+    lstate = s.local.autocolorize
+    if s.local.autocolorize == 'undefined':
+        if s.glob.autocolorize:
+            lstate = True
+        else:
+            lstate = False
+    create_menu(lstate, s.glob.autocolorize)
 
 
 def file_id(view):
