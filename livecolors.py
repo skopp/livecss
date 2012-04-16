@@ -57,7 +57,6 @@ class EventManager(sublime_plugin.EventListener):
         state = state_for(view)
         state.focused = True
         if state and state.theme_path:
-            print "Set theme for the view"
             # set file's own theme path, because we use one per file
             theme.set(state.theme_path)
 
