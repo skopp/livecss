@@ -41,10 +41,6 @@ def generate_menu(view):
     create_menu(lstate, s.glob.autocolorize)
 
 
-def file_id(view):
-    return view.file_name() or view.buffer_id()
-
-
 def is_colorizable(view):
     s = settings_for(view)
     point = view.sel()[0].begin()

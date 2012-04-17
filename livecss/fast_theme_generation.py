@@ -9,6 +9,7 @@
 import codecs
 import StringIO
 
+
 def dict_to_plist(dictionary):
     """Converts dict object to xml plist format"""
     start = '<dict>'
