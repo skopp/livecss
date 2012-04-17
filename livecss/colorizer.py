@@ -47,7 +47,6 @@ def colorize_file(view, state, forse_redraw=False):
     highlight_regions(view, colored_regions, colors, state)
 
 
-
 def uncolorize_file(view, state):
     """Removes highlighting from view,
     then delete modified theme file, set original theme.
@@ -56,7 +55,7 @@ def uncolorize_file(view, state):
     clear_css_regions(view)
     theme.set(uncolorized_path(theme.abspath))
     rm_theme(state.theme_path)
-    state.theme_path = False
+    state.theme_path = ""
 
 
 # extract colors from file

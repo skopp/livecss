@@ -17,7 +17,7 @@ from .state import state_for
 from .theme import theme, uncolorized_path
 from .colorizer import colorize_file
 from .menu import create_menu
-from .settings import settings_for
+from .settings import settings_for, global_settings
 
 
 def colorize_on_select_new_theme(view):
@@ -80,6 +80,5 @@ def need_uncolorization(view):
 
 def generate_default_settings():
     if not os.path.exists(os.path.join(sublime.packages_path(), 'User', 'livecss-settings.sublime-settings')):
-        s = settings_for(False)
-        s.glob.colorized_formats = ["source.css", "source.css.less", "source.sass"]
-        s.glob.autocolorize = True
+        global_settings.colorized_formats = ["source.css", "source.css.less", "source.sass"]
+        global_settings.autocolorize = True
