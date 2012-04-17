@@ -35,8 +35,6 @@ def colorize_file(view, state, forse_redraw=False):
     if not state.is_dirty and not forse_redraw:
         return
 
-    highlight_regions(view, colored_regions, colors, state)
-
     if forse_redraw or state.need_generate_theme_file:
         colorized_theme_path = generate_theme(uncolorized_path(theme.abspath), colors)
         if hasattr(state, 'focused') and state.focused:
@@ -45,6 +43,9 @@ def colorize_file(view, state, forse_redraw=False):
         rm_theme(state.theme_path)
         # associate theme with file
         state.theme_path = colorized_theme_path
+
+    highlight_regions(view, colored_regions, colors, state)
+
 
 
 def uncolorize_file(view, state):
