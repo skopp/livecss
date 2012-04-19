@@ -9,7 +9,7 @@
 """
 
 # std lib
-from os.path import basename, normpath, exists
+from os.path import basename, normpath, relpath, exists
 from random import randint
 import os.path
 import re
@@ -50,7 +50,7 @@ class theme(object):
             :param theme: abs or relpath to SUBLIME_PATH
             """
             if exists(theme_path):
-                cls._settings.set('color_scheme', theme_path)
+                cls._settings.set('color_scheme', relpath(theme_path, SUBLIME_PATH))
 
         def on_select_new_theme(cls, callback):
             cls._settings.add_on_change('color_scheme', callback)
