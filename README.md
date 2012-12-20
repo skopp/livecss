@@ -1,3 +1,6 @@
+> # Disclaimer (IMPORTANT!)
+> > This package is potentially volatile - be wary if you are not reasonably versed in ST2 -and is installed at your own risk.
+
 #Introduction:
 This plugin underlays the hexadecimal, rgb or named CSS color codes with their real color.
 The foreground color is selected oppositely.
