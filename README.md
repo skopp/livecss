@@ -40,7 +40,7 @@ Nice html documentation is available [here][1]
 - Improve code quality
 
 #Limitations:
-1. Still in beta, may contains bugs.
+1. Still in pre-beta/alpha, may contain bugs. 
 
 [1]:http://livecss.readthedocs.org/en/latest/index.html
 [package_control]: http://wbond.net/sublime_packages/package_control
